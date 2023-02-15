@@ -20,8 +20,7 @@ export default class TrackList extends Component {
     } )
 
     return (
-      <div>
-        <div>TrackList</div>
+      <div className="TrackList">
         {tracks}
       </div>
     )
