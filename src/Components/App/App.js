@@ -7,6 +7,7 @@ import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 
 import Spotify from '../../util/Spotify';
+import { computeHeadingLevel } from '@testing-library/react';
 
 class App extends React.Component{
   constructor(props){
@@ -42,14 +43,13 @@ class App extends React.Component{
   }
 
   savePlaylist() {
-    Spotify.savePlaylist();
+    // Spotify.savePlaylist();
   }
 
-  search(term){
-    Spotify.search(term)
-      .then(res => this.setState({
-        searchResults: res
-      }))
+  async search(term){
+    const songs = await Spotify.search(term);
+    this.setState({ searchResults: songs })
+
   }
 
 

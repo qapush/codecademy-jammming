@@ -1,3 +1,5 @@
+import { computeHeadingLevel } from "@testing-library/react";
+
 const appID = '247dca5eaa7949d98d2902bc2b054f63';
 const redirectURI = 'http://localhost:3000';
 
@@ -5,36 +7,37 @@ let token = null;
 
 const Spotify = {
 
-    search(song) {
+    async search(song) {
         const currentToken = this.getAccessToken();
-        return fetch(`https://api.spotify.com/v1/search?type=track&q=${song}`, {
+        let songs;
+        const rawData = await fetch(`https://api.spotify.com/v1/search?type=track&q=${song}`, {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${currentToken}`
             }
-        })
-            .then(res => res.json())
-            .then(songs => {
-                if (!songs.tracks) {   
-                    return []
-                } else {
-                    return songs.tracks.items.map(item => {
-                        return {
-                            id: item.id,
-                            name: item.name,
-                            artist: item.artists[0].name,
-                            URI: item.uri,
-                            album: item.album.name
-                        }
-                    })
+        });
+        
+        if(rawData.ok){
+            songs = await rawData.json();
+            if(!songs.tracks) return [];
+            return songs.tracks.items.map(item => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    artist: item.artists[0].name,
+                    URI: item.uri,
+                    album: item.album.name
                 }
             })
-
-
+        }
     },
 
     getAccessToken() {
         // If token exists - return it
-        if (token) return token;
+        
+        if (token) {
+            console.log('Token exists')
+            return token
+        };
         
         const urlQueryParamsObject = {};
         
@@ -58,34 +61,27 @@ const Spotify = {
         } catch (e) {
             console.log(Error('Failed to retrieve token from url'))
         }
-
-
-        // If token is in url
-       
-        
+  
         // If token is empty and not in url
+        
         if (!token && !urlQueryParamsObject.access_token) {
+            console.log('Token is empty or not in URL')
             window.location = `https://accounts.spotify.com/authorize?client_id=${appID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
         }
-
+        
+        // If token is in url
+        
          if(urlQueryParamsObject.access_token && urlQueryParamsObject.expires_in) {
+            console.log('Token is in url')
             token = urlQueryParamsObject.access_token;
             const expTime = Number(urlQueryParamsObject.expires_in);
             window.history.pushState('Access Token', null, '/');
-            setTimeout(() => { token = null }, expTime * 10000);
+            setTimeout(() => { token = null }, expTime * 1000);
         }
         
         return token;
     },
 
-    savePlaylist(name, array) {
-        // if (!name && !array) return;
-        const userToken = this.getAccessToken();
-        const authHeader = { Authorization: `Bearer ${token}` };
-        let userID;
-
-        fetch('https://api.spotify.com/v1/me', { authHeader });
-    }
 }
 
 export default Spotify;
