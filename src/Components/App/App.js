@@ -6,38 +6,14 @@ import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 
+import Spotify from '../../util/Spotify';
+
 class App extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      searchResults: [
-        {
-          name: 'Desperado',
-          artist: 'Rihanna',
-          album: 'Unapologetic',
-          id: 'sdf#$3525'
-        },
-        {
-          name: 'Unity',
-          artist: 'Royksopp',
-          album: 'Profound mysteries',
-          id: '123fsfdq#@'
-        },
-        {
-          name: 'Rocket',
-          artist: 'Beyonce',
-          album: '4',
-          id: 'SDFS23@'
-        }
-      ],
-      playlistTracks : [
-        {
-          name: 'Desperado',
-          artist: 'Rihanna',
-          album: 'Unapologetic',
-          id: 'sdf#$3525'
-        }
-      ],
+      searchResults: [],
+      playlistTracks : [],
       playlistName: 'My playlist 💥'
     }
 
@@ -66,14 +42,19 @@ class App extends React.Component{
   }
 
   savePlaylist() {
-    return this.playlistTracks.map(item => item.trackURI)
+    Spotify.savePlaylist();
   }
 
   search(term){
-    console.log(term);
+    Spotify.search(term)
+      .then(res => this.setState({
+        searchResults: res
+      }))
   }
 
-  render(){
+
+  render() {
+
     return (
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
