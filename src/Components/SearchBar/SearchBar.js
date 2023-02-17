@@ -4,13 +4,17 @@ import styles from './SearchBar.css';
 export default class SearchBar extends React.Component {
     constructor(props){
         super(props)
-      
+        this.state = {
+            term: null
+        }
         this.search = this.search.bind(this);
         this.handleTermChange = this.handleTermChange.bind(this);
     }
 
     search(){
-        this.props.onSearch(this.state.term)
+        if(this.state.term) {
+            this.props.onSearch(this.state.term)
+        }
     }
 
     handleTermChange(e){

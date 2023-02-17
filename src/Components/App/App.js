@@ -42,8 +42,8 @@ class App extends React.Component{
     this.setState({ playlistName: name })
   }
 
-  savePlaylist() {
-    // Spotify.savePlaylist();
+  async savePlaylist() {
+    Spotify.savePlaylist(this.state.playlistName);
   }
 
   async search(term){

@@ -7,6 +7,31 @@ let token = null;
 
 const Spotify = {
 
+    async savePlaylist(playlistName, tracksArray){
+        // if(!playlistName || !tracksArray) return;
+        const currentToken = this.getAccessToken();
+        const headers = {Authorization: `Bearer ${currentToken}`};
+        let user;
+
+        const userData =  await fetch('https://api.spotify.com/v1/me', { headers });
+
+        if(!userData.ok){
+            throw Error('Failed to get user data')
+        }
+        
+        user = await userData.json()
+
+        const newPlaylistData =  await fetch(`https://api.spotify.com/v1/users/${user.id}/playlists`, { 
+            method: 'POST',
+            headers, 
+            body: JSON.stringify({name: playlistName})
+        });
+
+        if(!newPlaylistData.ok){
+            throw Error('Failed to create a playlist')
+        }
+    },
+
     async search(song) {
         const currentToken = this.getAccessToken();
         let songs;
@@ -29,6 +54,7 @@ const Spotify = {
                 }
             })
         }
+        
     },
 
     getAccessToken() {
@@ -61,7 +87,10 @@ const Spotify = {
         } catch (e) {
             console.log(Error('Failed to retrieve token from url'))
         }
-  
+
+
+        
+        
         // If token is empty and not in url
         
         if (!token && !urlQueryParamsObject.access_token) {
@@ -82,6 +111,17 @@ const Spotify = {
         return token;
     },
 
+    // savePlaylist(name, array) {
+    //     // if (!name && !array) return;
+    //     const userToken = this.getAccessToken();
+    //     const authHeader = { Authorization: `Bearer ${userToken}` };
+    //     let userID;
+
+    //     fetch('https://api.spotify.com/v1/me', {headers: authHeader } )
+    //         .then(res => res.json())
+    //         .then(data => userID = data.id)
+        
+    // }
 }
 
 export default Spotify;
