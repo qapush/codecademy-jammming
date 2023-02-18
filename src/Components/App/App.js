@@ -1,13 +1,9 @@
 import React from 'react';
-
 import './App.css';
-
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
-
 import Spotify from '../../util/Spotify';
-import { computeHeadingLevel } from '@testing-library/react';
 
 class App extends React.Component{
   constructor(props){
@@ -43,13 +39,28 @@ class App extends React.Component{
   }
 
   async savePlaylist() {
-    Spotify.savePlaylist(this.state.playlistName);
+    const uris = this.state.playlistTracks.map(track => track.URI);
+    const savePlaylist = Spotify.savePlaylist(this.state.playlistName, uris);
+    if (savePlaylist) {
+      this.setState({
+        playlistName: '',
+        playlistTracks: []
+      })
+    }
   }
 
   async search(term){
     const songs = await Spotify.search(term);
     this.setState({ searchResults: songs })
 
+  }
+
+  componentDidMount() {
+    if (window.sessionStorage.getItem('searchTerm')) {
+      Spotify.search(window.sessionStorage.getItem('searchTerm'));
+      this.search(window.sessionStorage.getItem('searchTerm'));
+      this.setState();
+    }
   }
 
 

@@ -17,7 +17,7 @@ export default class Playlist extends Component {
         <div className="Playlist">
         <input
           onChange={this.handleNameChange}
-          defaultValue={this.props.playlistName || 'New Playlist'}
+          value={this.props.playlistName || 'New Playlist'}
         />
         <Tracklist
           tracks={this.props.playlistTracks}

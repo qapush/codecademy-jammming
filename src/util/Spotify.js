@@ -1,14 +1,12 @@
-import { computeHeadingLevel } from "@testing-library/react";
-
 const appID = '247dca5eaa7949d98d2902bc2b054f63';
-const redirectURI = 'http://localhost:3000';
+const redirectURI = 'https://qapush-jammming.surge.sh';
 
 let token = null;
 
 const Spotify = {
 
     async savePlaylist(playlistName, tracksArray){
-        // if(!playlistName || !tracksArray) return;
+        if(!playlistName || !tracksArray) return;
         const currentToken = this.getAccessToken();
         const headers = {Authorization: `Bearer ${currentToken}`};
         let user;
@@ -30,12 +28,29 @@ const Spotify = {
         if(!newPlaylistData.ok){
             throw Error('Failed to create a playlist')
         }
+
+        const playlist = await newPlaylistData.json();
+
+        const addToPlaylistData =  await fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, { 
+            method: 'POST',
+            headers, 
+            body: JSON.stringify({uris: tracksArray})
+        });
+
+        if(!addToPlaylistData.ok){
+            throw Error('Failed to add songs to playlist')
+        }
+
+        return true;
     },
 
-    async search(song) {
+    async search(searchTerm) {
+        // If searchterm passed - set it in session storage 
+        if (searchTerm) window.sessionStorage.setItem('searchTerm', searchTerm);
+
         const currentToken = this.getAccessToken();
         let songs;
-        const rawData = await fetch(`https://api.spotify.com/v1/search?type=track&q=${song}`, {
+        const rawData = await fetch(`https://api.spotify.com/v1/search?type=track&q=${searchTerm}`, {
             headers: {
                 Authorization: `Bearer ${currentToken}`
             }
@@ -111,17 +126,6 @@ const Spotify = {
         return token;
     },
 
-    // savePlaylist(name, array) {
-    //     // if (!name && !array) return;
-    //     const userToken = this.getAccessToken();
-    //     const authHeader = { Authorization: `Bearer ${userToken}` };
-    //     let userID;
-
-    //     fetch('https://api.spotify.com/v1/me', {headers: authHeader } )
-    //         .then(res => res.json())
-    //         .then(data => userID = data.id)
-        
-    // }
 }
 
 export default Spotify;

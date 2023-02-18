@@ -11,9 +11,12 @@ export default class SearchBar extends React.Component {
         this.handleTermChange = this.handleTermChange.bind(this);
     }
 
-    search(){
+    search() {
+        
         if(this.state.term) {
             this.props.onSearch(this.state.term)
+            this.setState({ term: null })
+            console.log('assaa')
         }
     }
 
