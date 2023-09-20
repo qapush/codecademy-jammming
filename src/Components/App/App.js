@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 
-import { fakeSongs } from './fakeData';
-
 import { getSongs } from '../../utils/Spotify';
 
 import styles from './App.module.css';
@@ -12,20 +10,20 @@ import SearchBar from '../SearchBar/SearchBar';
 
 function App() {
 
-  const [songsList, setSongsList] = useState(fakeSongs);
+  const [songsList, setSongsList] = useState([]);
   const [selectedSongs, setSelectedSongs] = useState([]);
 
   useEffect(() => {
     
     if (sessionStorage.getItem("searchTerm")){
-      getSongs(sessionStorage.getItem("searchTerm"));
+      handleSearch(sessionStorage.getItem("searchTerm"));
     };
-
 
   }, [])
 
-  const handleSearch = query => {
-    getSongs(query);
+  const handleSearch = async query => {
+    const searchResult =  await getSongs(query);
+    setSongsList(searchResult);
   }
 
   const handleSongButtonClick = id => {

@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import Tracklist from "../Tracklist/Tracklist"
+import TrackList from "../TrackList/TrackList";
 
 export default function Playlist(props) {
       
@@ -17,7 +17,7 @@ export default function Playlist(props) {
                   value={listName}
                   onChange={e => setListName(e.target.value)}
                />
-                  <Tracklist {...props} remove />
+                  <TrackList {...props} remove />
                   { listName !== '' && <button type="submit">Save to Spotify</button> }
                </form>
            )}

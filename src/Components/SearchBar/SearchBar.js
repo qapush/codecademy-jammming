@@ -12,6 +12,7 @@ export default function SearchBar({ handleSearch }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (searchTerm) {
+            sessionStorage.setItem("searchTerm", searchTerm);
             handleSearch(searchTerm);
             setSearchTerm('');
         }
