@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { getSongs } from '../../utils/Spotify';
+import { getSongs, createPlaylist } from '../../utils/Spotify';
 
 import styles from './App.module.css';
 import Header from './Header/Header';
@@ -44,10 +44,10 @@ function App() {
   }
 
 
-  const saveToSpotify = () => {
-    console.log(selectedSongs.map(item => item.uri));
+  const saveToSpotify = (listObject) => {
     setSongsList(prev => [...selectedSongs, ...prev]);
     setSelectedSongs([]);
+    createPlaylist(listObject);
   }
 
   return (
