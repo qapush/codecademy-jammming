@@ -1,10 +1,10 @@
 import Tracklist from "../Tracklist/Tracklist"
 
-export default function SearchResults({list = []}) {
+export default function SearchResults({list, ...rest}) {
     return(
-        <div id="search-results">
-            <h3>Search Results</h3>
-            <Tracklist list={list} />
-        </div>
+        <section>
+            <h2>Search Results</h2>
+            <Tracklist list={list} {...rest} />
+        </section>
     )
 }

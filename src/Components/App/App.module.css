@@ -1,53 +1,19 @@
-.spotify-1-hex {
-    color: #0D0A0A;
-}
-
-.spotify-2-hex {
-    color: #F2F2F2;
-}
-
-.spotify-3-hex {
-    color: #23D962;
-}
-
-.spotify-4-hex {
-    color: #1B592A;
-}
-
-.spotify-5-hex {
-    color: #1FA641;
-}
-
-
 .app {
 
-    background: rgb(31, 166, 65);
-    background: linear-gradient(220deg, #1FA641, #1B592A 40%);
+    background: var(--dark-green);
     min-height: 100vh;
 }
 
-/* HEADER */
-
-header {
-    padding: 1rem;
-    text-align: center;
-}
-
-.logo {
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    font-size: 2rem;
-}
-
-/* MAIN */
-
 main {
     display: flex;
+    justify-content: space-evenly;
 }
 
-main>div {
+section {
     flex-grow: 1;
     text-align: center;
-    color: white;
+    margin: 1rem;
+    max-width: 45%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }

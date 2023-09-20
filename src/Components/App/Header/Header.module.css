@@ -1,0 +1,14 @@
+header {
+    text-align: center;
+}
+
+.logo {
+    text-align: center;
+    font-weight: bold;
+    padding: 1rem 0;
+}
+
+.logo span {
+    color: var(--white);
+    font-size: 2rem;
+}
