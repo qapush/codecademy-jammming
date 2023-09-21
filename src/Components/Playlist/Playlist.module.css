@@ -1,3 +1,7 @@
-.note {
-    color: var(--white);
+.playlist input {
+    margin-bottom: 1rem;
+}
+
+.playlist button {
+    margin-top: 1rem;
 }

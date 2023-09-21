@@ -3,6 +3,7 @@ import styles from './Track.module.css';
 export default function Track({ track, remove, handleSongButtonClick }) {
     return (
         <div className={styles.track}>
+            <img src={track.image} alt={track.name} />
             <div className={styles.trackData}>
                 <div className={styles.trackName}>
                     <p>{track.name}</p>

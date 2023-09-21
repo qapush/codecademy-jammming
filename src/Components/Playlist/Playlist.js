@@ -16,15 +16,15 @@ export default function Playlist(props) {
    }
 
    const note = (
-      <div className={styles.note}>
+      <div className='note'>
          <p>
-            Please add tracks from the search to create a new list
+            Find some tracks to create a playlist
          </p>
       </div>
    )
 
    return (
-        <section>
+        <section className={styles.playlist}>
            <h2>Playlist</h2>
            { props.list.length == 0 ? note : (
             <form action="#" onSubmit={handleSubmit}>

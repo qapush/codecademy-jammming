@@ -10,19 +10,22 @@ import SearchBar from '../SearchBar/SearchBar';
 
 function App() {
 
+  // Arrays of search results and songs added to playlist
   const [songsList, setSongsList] = useState([]);
   const [selectedSongs, setSelectedSongs] = useState([]);
 
   useEffect(() => {
-    
-    if (sessionStorage.getItem("searchTerm")){
+
+    // Perform search if there is a search query im memory
+
+    if (sessionStorage.getItem("searchTerm")) {
       handleSearch(sessionStorage.getItem("searchTerm"));
     };
 
   }, [])
 
   const handleSearch = async query => {
-    const searchResult =  await getSongs(query);
+    const searchResult = await getSongs(query);
     setSongsList(searchResult);
   }
 
@@ -33,11 +36,11 @@ function App() {
 
     if (!isSelected) {
       const index = songsList.findIndex(song => song.id === id);
-      setSelectedSongs(prev => [songsList[index], ...prev]);  
+      setSelectedSongs(prev => [songsList[index], ...prev]);
       setSongsList(prev => [...prev.filter(song => song.id !== id)]);
     } else {
       const index = selectedSongs.findIndex(song => song.id === id);
-      setSongsList(prev => [selectedSongs[index], ...prev]);  
+      setSongsList(prev => [selectedSongs[index], ...prev]);
       setSelectedSongs(prev => [...prev.filter(song => song.id !== id)]);
     }
 
@@ -56,8 +59,13 @@ function App() {
         <SearchBar handleSearch={handleSearch} />
       </Header>
       <main>
-        <SearchResults list={songsList} handleSongButtonClick={handleSongButtonClick} />
-        <Playlist list={selectedSongs} handleSongButtonClick={handleSongButtonClick} handleSubmit={saveToSpotify} />
+        <SearchResults
+          list={songsList}
+          handleSongButtonClick={handleSongButtonClick} />
+        <Playlist
+          list={selectedSongs}
+          handleSongButtonClick={handleSongButtonClick}
+          handleSubmit={saveToSpotify} />
       </main>
 
     </div>

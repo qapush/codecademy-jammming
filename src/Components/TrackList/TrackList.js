@@ -1,8 +1,8 @@
 import { useState } from "react"
 import Track from '../Track/Track';
-import styles from './Tracklist.module.css';
+import styles from './TrackList.module.css';
 
-export default function Tracklist({ list, ...rest }) {
+export default function TrackList({ list, ...rest }) {
     
 
 
