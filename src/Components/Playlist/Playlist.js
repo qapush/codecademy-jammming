@@ -26,7 +26,7 @@ export default function Playlist(props) {
    return (
         <section className={styles.playlist}>
            <h2>Playlist</h2>
-           { props.list.length == 0 ? note : (
+           { props.list.length === 0 ? note : (
             <form action="#" onSubmit={handleSubmit}>
                <input
                   type="text"
