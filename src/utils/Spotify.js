@@ -1,7 +1,7 @@
 const BASE_URL = 'https://accounts.spotify.com/authorize';
 const RESPONSE_TYPE = '?response_type=token';
 const CLIENT_ID = `&client_id=${process.env.REACT_APP_SPOTIFY}`;
-const REDIRECT_URL = '&redirect_uri=http://localhost:3000';
+const REDIRECT_URL = '&redirect_uri=https://qapush-jammming.netlify.app/';
 const SCOPE = '&scope=playlist-modify-private user-read-private';
 let TOKEN = null;
 
