@@ -1,11 +1,13 @@
 const BASE_URL = 'https://accounts.spotify.com/authorize';
 const RESPONSE_TYPE = '?response_type=token';
-const CLIENT_ID = '&client_id=247dca5eaa7949d98d2902bc2b054f63';
+const CLIENT_ID = `&client_id=${process.env.REACT_APP_SPOTIFY}`;
 const REDIRECT_URL = '&redirect_uri=http://localhost:3000';
 const SCOPE = '&scope=playlist-modify-private user-read-private';
 let TOKEN = null;
 
 const getToken = () => {
+
+    console.log(CLIENT_ID);
     
     if (TOKEN) {
         return TOKEN;
