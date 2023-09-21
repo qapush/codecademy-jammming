@@ -1,14 +1,14 @@
 const BASE_URL = 'https://accounts.spotify.com/authorize';
 const RESPONSE_TYPE = '?response_type=token';
 const CLIENT_ID = `&client_id=${process.env.REACT_APP_SPOTIFY}`;
-const REDIRECT_URL = '&redirect_uri=https://qapush-jammming.netlify.app/';
+const REDIRECT_URL = `&redirect_uri=${process.env.NODE_ENV === 'development'
+    ? 'https://qapush-jammming.netlify.app/'
+    : 'http://localhost:3000/'}`;
 const SCOPE = '&scope=playlist-modify-private user-read-private';
 let TOKEN = null;
 
 const getToken = () => {
-
-    console.log(CLIENT_ID);
-    
+   
     if (TOKEN) {
         return TOKEN;
     } else if (window.location.hash.length > 1) {
